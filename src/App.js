@@ -2,24 +2,32 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import {getBalance,stake,withdraw} from './functions'
+import {getBalance,stake,withdraw,approve,getStakedInfo} from './functions'
 
 
 
 function App() {
 
-  const {account,activate,chainId,active,connector} = useWeb3React()
+  const {account,chainId} = useWeb3React()
 
   const [networkName,SetNN] = useState(null)
   const [bal,SetBal] = useState(null)
+  const [input,setInput] = useState(null)
+  const [info,setInfo] = useState(null)
 
   useEffect(()=>{
     SetNN(chainId)
     getBalance().then(x=>{
       SetBal(x)
     })
-    console.log(bal)
-  },[chainId,account])
+    getStakedInfo().then(y=>{
+      setInfo(y)
+    })
+  },[chainId,account,info])
+
+  useEffect(()=>{
+    setInput(input)
+  },[input])
 
   function display() {
     if(networkName){
@@ -47,17 +55,17 @@ function App() {
           <div className="text-box">
             <div className="heads">
               <h1 className="main-head">Your LEDU Balance is :: 
-                <h6>{bal}</h6>
+                <h6>{bal && bal[0]}</h6>
               </h1>
             </div>
             <h4 className="text-tag">
               CONNECTED TO<span> {display()}</span> NETWORK
             </h4>
             <h5 className="your-address">YOUR ADDRESS is {account}</h5>
-            <input type="text" className="input-field" />
+            <input type="text" className="input-field" onChange={(e)=>{setInput(e.target.value)}} />
             <h6 className="show-address">SHOW CONTRACT ADDESS</h6>
             <div className="buttons">
-              <button className="btn">Stake</button>
+              <button className="btn" onClick={()=>stake(input)}>Stake</button>
               <button className="btn">Withdraw</button>
             </div>
           </div>
@@ -65,11 +73,11 @@ function App() {
             <div className="card-container">
               <div className="staked-balance">
                 <h2 className="text-desc">Your staked balance</h2>
-                <h2 className="value-desc">0 LEDU</h2>
+                <h2 className="value-desc">{info && info[0].toPrecision(10)} LEDU</h2>
               </div>
               <div className="rewards-unstake">
                 <h2 className="text-desc">Rewards if un-staked today</h2>
-                <h2 className="value-desc">0 LEDU</h2>
+                <h2 className="value-desc">{info && info[1].toPrecision(10)} LEDU</h2>
               </div>
               <div className="rewards-maturity">
                 <h2 className="text-desc">Rewards at maturity</h2>
