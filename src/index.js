@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import { Web3ReactProvider,useWeb3React,getWeb3ReactContext } from "@web3-react/core";
+import { Web3ReactProvider } from "@web3-react/core";
 import Web3 from 'web3'
 
 function getLibrary(provider){

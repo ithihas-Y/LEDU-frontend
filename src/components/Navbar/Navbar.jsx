@@ -6,10 +6,10 @@ import "./Navbar.css";
 const Navbar = () => {
 
   const injected = new InjectedConnector({
-    supportedChainIds :[1,3,4,5],
+    supportedChainIds :[1,3,4,5,56,137],
   })
 
-  const {account,activate,chainId,active,connector} = useWeb3React()
+  const {activate} = useWeb3React()
 
   async function connect(){
     try {

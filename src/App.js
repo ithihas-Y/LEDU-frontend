@@ -31,18 +31,31 @@ function App() {
 
   function display() {
     if(networkName){
-      if(networkName==1){
+      if(networkName===1){
         return 'ETHEREUM'
       }
-      if(networkName==2){
+      if(networkName===2){
         return 'KOVAN'
       }
-      if(networkName ==3){
+      if(networkName ===3){
         return 'ROPSTEN'
       }
-      if(networkName ==4){
+      if(networkName ===4){
         return 'RINKEBY'
       }
+    }
+  }
+
+  function approveRender(){
+    if(bal && bal[1] ==0){
+      return <>
+              <button className="btn" onClick={()=>approve()}>Approve</button>
+            </>
+    }else{
+      return <>
+              <button className="btn" onClick={()=>stake(input)}>Stake</button>
+              <button className="btn" onClick={()=>withdraw(input)}>Withdraw</button>
+            </>
     }
   }
 
@@ -62,11 +75,10 @@ function App() {
               CONNECTED TO<span> {display()}</span> NETWORK
             </h4>
             <h5 className="your-address">YOUR ADDRESS is {account}</h5>
-            <input type="text" className="input-field" onChange={(e)=>{setInput(e.target.value)}} />
+            <input type="number" min="0" step="1" className="input-field" onChange={(e)=>{setInput(e.target.value)}} />
             <h6 className="show-address">SHOW CONTRACT ADDESS</h6>
             <div className="buttons">
-              <button className="btn" onClick={()=>stake(input)}>Stake</button>
-              <button className="btn">Withdraw</button>
+              {approveRender()}
             </div>
           </div>
           <div className="card">
