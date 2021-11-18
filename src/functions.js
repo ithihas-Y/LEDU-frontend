@@ -5,7 +5,7 @@ import Web3 from 'web3'
 
 const provider = new Web3.providers.HttpProvider(process.env.REACT_APP_RPC)
 
-const web3 = new Web3(provider)
+export const web3 = new Web3(provider)
 
 
 const smartCHef = new web3.eth.Contract(

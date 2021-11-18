@@ -2,7 +2,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import {getBalance,stake,withdraw,approve,getStakedInfo} from './functions'
+import {getBalance,stake,withdraw,approve,getStakedInfo,web3} from './functions'
 
 
 
@@ -10,10 +10,13 @@ function App() {
 
   const {account,chainId} = useWeb3React()
 
+  let input
+
   const [networkName,SetNN] = useState(null)
   const [bal,SetBal] = useState(null)
-  const [input,setInput] = useState(null)
+  //const [input,setInput] = useState(null)
   const [info,setInfo] = useState(null)
+
 
   useEffect(()=>{
     SetNN(chainId)
@@ -23,11 +26,21 @@ function App() {
     getStakedInfo().then(y=>{
       setInfo(y)
     })
-  },[chainId,account,info])
+  },[chainId,account])
 
+  /*
   useEffect(()=>{
-    setInput(input)
+    if(input !=null){
+      setInput(web3.utils.toWei(input.toString()))
+    }
   },[input])
+  */
+
+  function handleInput(x){
+    if(x != null){
+      input = web3.utils.toWei(x)
+    }
+  }
 
   function display() {
     if(networkName){
@@ -75,7 +88,7 @@ function App() {
               CONNECTED TO<span> {display()}</span> NETWORK
             </h4>
             <h5 className="your-address">YOUR ADDRESS is {account}</h5>
-            <input type="number" min="0" step="1" className="input-field" onChange={(e)=>{setInput(e.target.value)}} />
+            <input type="number" min="0" step="1" max={bal && bal[0]} className="input-field" onChange={(e)=>{handleInput(e.target.value)}} />
             <h6 className="show-address">SHOW CONTRACT ADDESS</h6>
             <div className="buttons">
               {approveRender()}
