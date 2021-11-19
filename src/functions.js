@@ -21,7 +21,7 @@ const ethereum = window.ethereum
 export async function stake(amt) {
     try {
         if (typeof ethereum !== "undefined" && ethereum !== "") {
-          const tx = smartCHef.methods.deposit(amt).encodeABI()
+          const tx = smartCHef.methods.deposit(web3.utils.toWei(amt.toString())).encodeABI()
           const transactionParameters = {
             to: '0xbc046d9cDD95E171E5cD62e57f6cB0f293bb8206',
             from: ethereum.selectedAddress,
@@ -41,7 +41,7 @@ export async function stake(amt) {
 export async function withdraw(amt) {
   try {
       if (typeof ethereum !== "undefined" && ethereum !== "") {
-        const tx = smartCHef.methods.withdraw(amt).encodeABI()
+        const tx = smartCHef.methods.withdraw(web3.utils.toWei(amt.toString())).encodeABI()
         const transactionParameters = {
           to: '0xbc046d9cDD95E171E5cD62e57f6cB0f293bb8206',
           from: ethereum.selectedAddress,

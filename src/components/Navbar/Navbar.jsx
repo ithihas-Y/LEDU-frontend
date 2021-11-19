@@ -6,14 +6,14 @@ import "./Navbar.css";
 const Navbar = () => {
   const [wallet,setWalllet] = useState();
   const injected = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5],
+    supportedChainIds: [1, 3, 4, 5,56,137],
   });
 
   const { account, activate } = useWeb3React();
 
-  async function connect() {
+async function connect() {
     try {
-      await activate(injected);
+       await activate(injected)
       if (window.ethereum) {
         setWalllet(true)
         window.alert("Connected");
@@ -29,7 +29,7 @@ const Navbar = () => {
       <h1 className="logo">LEDU</h1>
       <button
         className={wallet ? "connected-wallet" : "connect-wallet-btn"}
-        onClick={() => connect()}
+        onClick={()=>{connect()}}
       >
         {wallet ? "Wallet Connected" : "Connect Wallet"}
       </button>

@@ -2,7 +2,7 @@ import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import {getBalance,stake,withdraw,approve,getStakedInfo,web3} from './functions'
+import {getBalance,stake,withdraw,approve,getStakedInfo} from './functions'
 
 
 
@@ -35,12 +35,6 @@ function App() {
     }
   },[input])
   */
-
-  function handleInput(x){
-    if(x != null){
-      input = web3.utils.toWei(x)
-    }
-  }
 
   function display() {
     if(networkName){
@@ -88,7 +82,7 @@ function App() {
               CONNECTED TO<span> {display()}</span> NETWORK
             </h4>
             <h5 className="your-address">YOUR ADDRESS is {account}</h5>
-            <input type="number" min="0" step="1" max={bal && bal[0]} className="input-field" onChange={(e)=>{handleInput(e.target.value)}} />
+            <input type="number" min="0" step="1" max={bal && bal[0]} className="input-field" onChange={(e)=>{input = e.target.value}} />
             <h6 className="show-address">SHOW CONTRACT ADDESS</h6>
             <div className="buttons">
               {approveRender()}
